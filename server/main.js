@@ -14,6 +14,8 @@ function onRoute({ params: { token }}, res, next) {
   // find link where token == token
   const link = Links.findOne({ token })
   if (link) {
+    // Increment clicks counter
+    Links.update(link, {$inc: {clicks: 1} })
     // redirect (307) user to url assoc with that record
     res.writeHead(307, { 'Location': link.url })
     res.end()
